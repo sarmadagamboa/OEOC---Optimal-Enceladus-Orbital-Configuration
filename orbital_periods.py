@@ -25,6 +25,7 @@ def compute_orbital_period_outputs(config: MissionConfig):
         "stable_period_h": stable_period_h,
         "exact_200km_period_h": exact_200km_period_h,
         "orbits_per_tidal_cycle": config.tidal_period_h / stable_period_h,
+        "tidal_cycles_per_spacecraft_orbit": stable_period_h / config.tidal_period_h,
         "tidal_phase_step_deg": 360.0 * stable_period_h / config.tidal_period_h,
         "number_of_orbits": config.primary_science_days * 24.0 / stable_period_h,
     }
