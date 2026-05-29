@@ -4,15 +4,15 @@ from __future__ import annotations
 
 import math
 
-from mission_config import MissionConfig, SECONDS_PER_HOUR
+from mission_config import SECONDS_PER_HOUR
 
 
-def orbital_period_s(semimajor_axis_m: float, mu_m3_s2: float):
+def orbital_period_s(semimajor_axis_m, mu_m3_s2):
     """Computes Keplerian orbital period for a circular or near-circular orbit."""
     return 2.0 * math.pi * math.sqrt(semimajor_axis_m**3 / mu_m3_s2)
 
 
-def compute_orbital_period_outputs(config: MissionConfig):
+def compute_orbital_period_outputs(config):
     """Computes spacecraft period, tidal phase stepping, and yearly orbit count."""
     stable_period_s = orbital_period_s(config.stable_semimajor_m, config.gm_enceladus_m3_s2)
     stable_period_h = stable_period_s / SECONDS_PER_HOUR
