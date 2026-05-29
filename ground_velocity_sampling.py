@@ -4,21 +4,19 @@ from __future__ import annotations
 
 import math
 
-from mission_config import MissionConfig
 
-
-def circular_orbital_speed_m_s(radius_m: float, mu_m3_s2: float):
+def circular_orbital_speed_m_s(radius_m, mu_m3_s2):
     """Computes circular orbital speed at a given distance from Enceladus center."""
     return math.sqrt(mu_m3_s2 / radius_m)
 
 
-def ground_speed_m_s(radius_m: float, body_radius_m: float, mu_m3_s2: float):
+def ground_speed_m_s(radius_m, body_radius_m, mu_m3_s2):
     """Projects orbital speed down to the surface footprint speed."""
     orbital_speed = circular_orbital_speed_m_s(radius_m, mu_m3_s2)
     return orbital_speed * body_radius_m / radius_m
 
 
-def compute_ground_velocity_outputs(config: MissionConfig):
+def compute_ground_velocity_outputs(config):
     """Computes spacecraft speed, surface footprint speed, and sample spacing."""
     nrho_periapsis_radius_m = config.radius_enceladus_m + config.nrho_periapsis_altitude_m
     stable_orbital_speed = circular_orbital_speed_m_s(

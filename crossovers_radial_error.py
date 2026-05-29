@@ -4,16 +4,14 @@ from __future__ import annotations
 
 import math
 
-from mission_config import MissionConfig
 
-
-def crossover_count_scaling(number_of_orbits: float):
+def crossover_count_scaling(number_of_orbits):
     """Estimates crossover count using the rough N squared scaling."""
     return number_of_orbits**2 #this essentially shows that the more the spacecraft orbits, the more crosspoints it generates. 
 
 
 
-def crossover_uncertainty_m(radial_error_m: float, altimeter_noise_m: float):
+def crossover_uncertainty_m(radial_error_m, altimeter_noise_m):
     """Calculates a simplified version of the crossover height difference uncertainty.
     You have 2 big errors; SSpacecraft orbit determination error (radial_error_m) and the altimeter noise error (altimeter_noise_m)
     """
@@ -21,11 +19,11 @@ def crossover_uncertainty_m(radial_error_m: float, altimeter_noise_m: float):
 
 
 def self_calibration_estimate(
-    raw_radial_error_m: float,
-    altimeter_noise_m: float,
-    number_of_orbits: float,
-    crossover_count: float,
-    systematic_floor_m: tuple[float, float],
+    raw_radial_error_m,
+    altimeter_noise_m,
+    number_of_orbits,
+    crossover_count,
+    systematic_floor_m,
 ):
     """Estimates crossover least-squares redundancy and radial-error reduction.
    It calculates how much your spacecraft's radial orbit error will shrink when 
@@ -51,8 +49,8 @@ def self_calibration_estimate(
 
 
 def compute_crossover_outputs(
-    config: MissionConfig,
-    number_of_orbits: float,
+    config,
+    number_of_orbits,
 ):
     """This is the main core simulation of the altimeter error budget and performance. 
     Evaluates whether or not it is capable of detecting Enceladus' tides. 
