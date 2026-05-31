@@ -1,6 +1,6 @@
 # Enceladus Orbit Configuration
-
-Run the analysis from the main mission folder:
+This is an orbital configuration optimized for an Enceladus mission to comprehend and study its habitability.
+Run the analysis from the main Enceladus mission folder:
 
 ```powershell
 python OEOC\enceladus_orbit_architecture.py
