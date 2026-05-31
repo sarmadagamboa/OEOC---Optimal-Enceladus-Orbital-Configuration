@@ -1,6 +1,4 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
-CALCULATION_FLOW.md
-
+EOC_Calculation_Flow.md

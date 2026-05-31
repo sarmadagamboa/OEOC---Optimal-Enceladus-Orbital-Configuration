@@ -6,7 +6,7 @@ import math
 
 
 def crossover_count_scaling(number_of_orbits):
-    """Estimates crossover count using the rough N squared scaling."""
+    """Estimates order-of-magnitude crossover opportunities using N squared scaling."""
     return number_of_orbits**2 #this essentially shows that the more the spacecraft orbits, the more crosspoints it generates. 
 
 
@@ -25,7 +25,7 @@ def self_calibration_estimate(
     crossover_count,
     systematic_floor_m,
 ):
-    """Estimates crossover least-squares redundancy and radial-error reduction.
+    """Estimates optimistic crossover least-squares redundancy and radial-error reduction.
    It calculates how much your spacecraft's radial orbit error will shrink when 
    you run a least-squares adjustment using millions of overlapping altimeter measurements 
     """
