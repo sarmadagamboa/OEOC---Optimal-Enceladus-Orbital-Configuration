@@ -1,0 +1,97 @@
+ENCELADUS ORBIT CONFIGURATION OUTPUTS
+=============================================
+
+Baseline assumptions
+- Enceladus GM: 7.21037e+09 m^3/s^2
+- Saturn GM: 3.79312e+16 m^3/s^2
+- Saturn-Enceladus distance used for CR3BP: 238042.0 km
+- Enceladus mean radius: 252.1 km
+- Enceladus tidal/orbital period around Saturn: 32.88 h
+- Nominal Phase 1 period target used for architecture: 12.00 h
+- Phase 1 closest-approach altitude target over SPT: 100.0 km
+- Stable phase semi-major axis used: 427.0 km
+- This equals 174.9 km over the mean radius and reproduces the prompt's ~5.74 h period.
+- A literal 200 km altitude circular orbit would use a = 452.1 km.
+
+Phase 1 CR3BP NRHO validation table
+| Quantity | Value |
+| --- | ---: |
+| CR3BP mass parameter mu | 1.900908e-07 |
+| L1 distance from Enceladus | 947.7 km |
+| L2 distance from Enceladus | 950.3 km |
+| Selected family | L2 halo-style CR3BP orbit |
+| Selected z-amplitude seed | 350.0 km |
+| Phase 1 CR3BP propagated | True |
+| Differential correction | True after 4 iterations |
+| Correction residual | 5.54e-12 |
+| Period | 12.991 h |
+| Minimum altitude | 101.9 km |
+| Maximum altitude | 1080.7 km |
+| Ground-track latitude range | -81.4 to 58.7 deg |
+| SPT access | True |
+| Surface intersection | False |
+
+Phase 1 to Phase 2 transfer optimization table
+| Quantity | Value |
+| --- | ---: |
+| Transfer model | minimum-delta-v two-body Lambert grid search |
+| Departure time on Phase 1 orbit | 4.124 h |
+| Departure altitude | 941.1 km |
+| Departure at Phase 1 periapsis | False |
+| Time of flight | 10.865 h |
+| Departure delta-v | 59.9 m/s |
+| Arrival insertion delta-v | 31.4 m/s |
+| Total transfer delta-v | 91.3 m/s |
+| Minimum transfer altitude | 174.9 km |
+
+A. Spacecraft orbital period and tidal phase sampling
+- Stable orbit period: 5.735 h
+- Literal 200 km-altitude period check: 6.248 h
+- Orbits per 32.88 h tidal cycle: 5.733
+- Fraction of tidal cycle covered per spacecraft orbit: 0.174
+- Tidal phase advance per spacecraft orbit: 62.79 deg
+- Interpretation: this gives favorable tidal-phase diversity. Actual tide recovery still depends on repeat-track/crossover geometry, not on consecutive-orbit phase spacing alone.
+
+B. Crossover count scaling
+- Primary science duration: 365.0 days
+- Number of stable-orbit revolutions: 1527.4
+- Order-of-magnitude N^2 crossover opportunity estimate: 2.333e+06
+- Rounded planning estimate, not exact count: 2.33 million possible crossovers
+- Caveat: actual accepted crossovers depend on inclination, longitude drift, spacing, orbit precision, rejected near-parallel crossings, and coverage gaps.
+
+C. Radial orbit error and crossover self-calibration
+- Assumed single-height measurement noise: 0.30 m
+- Raw radial-error cases:
+  radial 1.0 m -> crossover sigma 1.48 m
+  radial 2.0 m -> crossover sigma 2.86 m
+  radial 3.0 m -> crossover sigma 4.26 m
+- Target radial-error cases after crossover self-calibration:
+  radial 0.5 m -> crossover sigma 0.82 m, SNR for 1 m tide 1.21, SNR for 2 m tide 2.43
+  radial 1.0 m -> crossover sigma 1.48 m, SNR for 1 m tide 0.68, SNR for 2 m tide 1.35
+- Optimistic least-squares sizing using a 2 m raw radial case:
+  unknown arc offsets plus h2: 1528
+  observations per unknown, approx.: 1526
+  random-only arc precision from independent-crossing assumption: 0.073 m
+  assumed practical effective radial-error target with systematics: 0.50 to 1.00 m
+- Interpretation: the redundancy calculation is optimistic because crossovers are correlated. The 0.5-1.0 m range is a target assumption, not a proven result from this simplified model.
+
+D. Ground velocity and sampling
+- Phase 1 closest-approach altitude used: 101.9 km
+- Phase 1 closest-approach orbital speed: 142.7 m/s
+- Phase 1 closest-approach ground speed: 101.6 m/s
+- Stable orbit orbital speed: 129.9 m/s
+- Stable orbit ground speed: 76.7 m/s
+- Enceladus equatorial surface rotation speed: 13.4 m/s
+- Caveat: ground speeds are approximate surface-projected speeds for sampling estimates; exact ground-track speed depends on body rotation and pass direction and can differ by roughly 10-20%.
+- Along-track sample spacing examples:
+  1 Hz -> Phase 1 101.64 m, stable 76.72 m
+  10 Hz -> Phase 1 10.16 m, stable 7.67 m
+  100 Hz -> Phase 1 1.02 m, stable 0.77 m
+
+Architecture conclusion
+- Phase 1 is now a propagated Saturn-Enceladus CR3BP halo-style orbit near Enceladus, selected for about 100 km closest approach and SPT latitude access.
+- Phase 2 stable low-inclination orbit gives long-duration coverage and an order-of-magnitude million-scale crossover opportunity estimate, but cannot directly cover 80-90 deg S.
+- The Phase 2 stable orbit remains a two-body low-inclination approximation. The baseline calculation uses 60 deg inclination for geodetic/tidal coverage; an ESA-compatible <=48 deg case should be re-run if that constraint is adopted.
+- The mission architecture is therefore justified as Phase 1 for targeted SPT passes and Phase 2 for stable crossover-rich gravity/topography/tide analysis.
+
+Note: the Phase 1 curve is generated from propagated CR3BP states. The dashed transfer is now the minimum-delta-v Lambert transfer found by the Enceladus-centered two-body grid search, not a full CR3BP manifold optimization.
