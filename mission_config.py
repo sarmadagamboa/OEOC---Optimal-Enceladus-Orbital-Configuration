@@ -28,6 +28,8 @@ class MissionConfig:
     nrho_halo_z_step_km: float = 5.0
     cr3bp_rtol: float = 1.0e-11
     cr3bp_atol: float = 1.0e-12
+    transfer_departure_samples: int = 64
+    transfer_arrival_samples: int = 64
     raw_radial_error_cases_m: tuple[float, ...] = (1.0, 2.0, 3.0)
     calibrated_radial_error_cases_m: tuple[float, ...] = (0.5, 1.0)
     altimeter_height_noise_m: float = 0.30 #check with Amir/Floris
