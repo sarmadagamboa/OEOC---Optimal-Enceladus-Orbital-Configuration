@@ -3,7 +3,7 @@ ENCELADUS ORBIT CONFIGURATION INTERPRETATION
 
 Bottom line
 - The selected Phase 1 orbit reaches 81.4 deg S, so it only clips the outer SPT boundary.
-- It does not meet the stronger full-SPT target of 86 deg S; it misses that target by about 4.6 deg.
+- It does not meet the stronger full-SPT target of 86 deg S (still gets the mission generated); it misses that target by about 4.6 deg.
 - The Phase 2 stable orbit is 60 deg inclination, so it is for repeat altimetry and crossovers, not direct south-pole coverage.
 
 Key checks
@@ -32,7 +32,7 @@ Transfer phase: science continuity and risk
 The transfer is mainly an architecture enabler, not the core mapping phase. It costs about 91.3 m/s and remains above 174.9 km, so it does not drive the altimeter error budget directly. Its effect on the altimeter mission is indirect: it preserves enough propellant and altitude margin to move from targeted SPT passes into the stable mapping orbit without making the low-orbit campaign too expensive or risky. Any altimeter data during transfer should be treated as opportunistic, with less controlled geometry than the two planned science phases.
 
 Phase 2: stable repeat-altimetry campaign
-Phase 2 is the workhorse for geodetic and tidal altimetry. The 174.9 km altitude gives a 5.735 h period, producing about 1527 revolutions over the primary science year and roughly 2.33 million potential crossover opportunities. This is what lets the mission reduce radial orbit error through self-calibration and compare surface heights at different tidal phases. The limitation is latitude: a 60 deg stable orbit cannot directly observe the 80-90 deg S polar terrain, so it complements Phase 1 rather than replacing it.
+Phase 2 is the workhorse for geodetic and tidal altimetry. The 174.9 km altitude gives a 5.735 h period, producing about 1527 revolutions over the primary science year and roughly 2.33 million potential crossover opportunities (very generous approximation). This is what lets the mission reduce radial orbit error through self-calibration and compare surface heights at different tidal phases. The limitation is latitude: a 60 deg stable orbit cannot directly observe the 80-90 deg S polar terrain, so it complements Phase 1 rather than replacing it.
 
 Sampling speed
 The altimeter footprint moves at about 101.6 m/s during the Phase 1 closest pass and 76.7 m/s in the stable Phase 2 orbit. At a representative 10 Hz measurement rate, this gives along-track samples every 10.2 m in Phase 1 and 7.7 m in Phase 2, so sampling density is not the main limitation; orbit knowledge and crossover geometry are.
