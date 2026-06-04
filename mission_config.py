@@ -23,6 +23,8 @@ class MissionConfig:
     nrho_period_h: float = 12.0
     nrho_periapsis_altitude_m: float = 100.0e3
     nrho_libration_point: str = "L2"
+    spt_boundary_latitude_deg: float = -80.0
+    spt_full_access_latitude_deg: float = -80.0
     nrho_halo_z_min_km: float = 305.0
     nrho_halo_z_max_km: float = 380.0
     nrho_halo_z_step_km: float = 5.0

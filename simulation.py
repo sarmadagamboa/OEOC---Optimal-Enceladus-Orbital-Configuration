@@ -300,7 +300,12 @@ def validation_from_propagation(config, corrected, propagation, z_amplitude_km):
     max_altitude = float(np.max(propagation["altitude_km"]))
     min_latitude = float(np.min(propagation["latitude_deg"]))
     max_latitude = float(np.max(propagation["latitude_deg"]))
-    spt_access = bool(min_latitude <= -80.0 and min_altitude > 0.0)
+    spt_boundary_access = bool(
+        min_latitude <= config.spt_boundary_latitude_deg and min_altitude > 0.0
+    )
+    spt_full_access = bool(
+        min_latitude <= config.spt_full_access_latitude_deg and min_altitude > 0.0
+    )
 
     return {
         "phase1_cr3bp_propagated": True,
@@ -314,7 +319,9 @@ def validation_from_propagation(config, corrected, propagation, z_amplitude_km):
         "period_h": float(propagation["period_h"]),
         "groundtrack_min_latitude_deg": min_latitude,
         "groundtrack_max_latitude_deg": max_latitude,
-        "spt_access": spt_access,
+        "spt_access": spt_boundary_access,
+        "spt_boundary_access": spt_boundary_access,
+        "spt_full_access": spt_full_access,
         "surface_intersection": bool(min_altitude <= 0.0),
         "correction_residual": corrected["correction_residual"],
         "correction_iterations": corrected["iterations"],

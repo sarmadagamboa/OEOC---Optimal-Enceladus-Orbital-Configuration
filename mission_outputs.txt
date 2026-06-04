@@ -1,97 +1,38 @@
-ENCELADUS ORBIT CONFIGURATION OUTPUTS
-=============================================
+ENCELADUS ORBIT CONFIGURATION INTERPRETATION
+================================================
 
-Baseline assumptions
-- Enceladus GM: 7.21037e+09 m^3/s^2
-- Saturn GM: 3.79312e+16 m^3/s^2
-- Saturn-Enceladus distance used for CR3BP: 238042.0 km
-- Enceladus mean radius: 252.1 km
-- Enceladus tidal/orbital period around Saturn: 32.88 h
-- Nominal Phase 1 period target used for architecture: 12.00 h
-- Phase 1 closest-approach altitude target over SPT: 100.0 km
-- Stable phase semi-major axis used: 427.0 km
-- This equals 174.9 km over the mean radius and reproduces the prompt's ~5.74 h period.
-- A literal 200 km altitude circular orbit would use a = 452.1 km.
+Bottom line
+- The selected Phase 1 orbit reaches 81.4 deg S, so it only clips the outer SPT boundary.
+- It does not meet the stronger full-SPT target of 86 deg S; it misses that target by about 4.6 deg.
+- The Phase 2 stable orbit is 60 deg inclination, so it is for repeat altimetry and crossovers, not direct south-pole coverage.
 
-Phase 1 CR3BP NRHO validation table
+Key checks
 | Quantity | Value |
 | --- | ---: |
-| CR3BP mass parameter mu | 1.900908e-07 |
-| L1 distance from Enceladus | 947.7 km |
-| L2 distance from Enceladus | 950.3 km |
-| Selected family | L2 halo-style CR3BP orbit |
-| Selected z-amplitude seed | 350.0 km |
-| Phase 1 CR3BP propagated | True |
-| Differential correction | True after 4 iterations |
-| Correction residual | 5.54e-12 |
-| Period | 12.991 h |
-| Minimum altitude | 101.9 km |
-| Maximum altitude | 1080.7 km |
-| Ground-track latitude range | -81.4 to 58.7 deg |
-| SPT access | True |
-| Surface intersection | False |
+| Phase 1 period | 12.991 h |
+| Phase 1 altitude range | 101.9 to 1080.7 km |
+| Phase 1 latitude range | -81.4 to 58.7 deg |
+| SPT boundary access, >= 80 deg S | True |
+| Full SPT access target, >= 86 deg S | False |
+| Stable-orbit altitude | 174.9 km |
+| Stable-orbit period | 5.735 h |
+| Stable-orbit inclination | 60.0 deg |
+| Stable-orbit revolutions in primary science | 1527 |
+| Planning crossover opportunity | 2.33 million |
+| Transfer delta-v | 91.3 m/s |
+| Effective radial-error target after calibration | 0.50 to 1.00 m |
 
-Phase 1 to Phase 2 transfer optimization table
-| Quantity | Value |
-| --- | ---: |
-| Transfer model | minimum-delta-v two-body Lambert grid search |
-| Departure time on Phase 1 orbit | 4.124 h |
-| Departure altitude | 941.1 km |
-| Departure at Phase 1 periapsis | False |
-| Time of flight | 10.865 h |
-| Departure delta-v | 59.9 m/s |
-| Arrival insertion delta-v | 31.4 m/s |
-| Total transfer delta-v | 91.3 m/s |
-| Minimum transfer altitude | 174.9 km |
+Why the SPT flag was true
+The previous output used SPT access to mean crossing the outer South Polar Terrain definition, taken here as reaching at least 80 deg S. Because the propagated Phase 1 ground track reaches 81.4 deg S and stays above the surface, that boundary-access test is true. That is not the same as full polar access. If the science requirement is coverage close to the pole, around 86-87 deg S, then the current selected orbit should be treated as insufficient and the Phase 1 design needs to be retuned.
 
-A. Spacecraft orbital period and tidal phase sampling
-- Stable orbit period: 5.735 h
-- Literal 200 km-altitude period check: 6.248 h
-- Orbits per 32.88 h tidal cycle: 5.733
-- Fraction of tidal cycle covered per spacecraft orbit: 0.174
-- Tidal phase advance per spacecraft orbit: 62.79 deg
-- Interpretation: this gives favorable tidal-phase diversity. Actual tide recovery still depends on repeat-track/crossover geometry, not on consecutive-orbit phase spacing alone.
+Phase 1: SPT reconnaissance altimetry
+Phase 1 gives the altimeter its only direct high-southern-latitude opportunity in this architecture. The closest approach is 101.9 km, which is good for strong returned signal and dense along-track sampling, but the 81.4 deg S latitude limit means the pass samples the edge of the SPT rather than the full polar cap. For the overall altimeter mission, this phase is useful for targeted fracture/topography observations and for tying the polar region into the rest of the height model, but it should not be sold as complete south-pole coverage unless the orbit is redesigned toward the 86-87 deg S band.
 
-B. Crossover count scaling
-- Primary science duration: 365.0 days
-- Number of stable-orbit revolutions: 1527.4
-- Order-of-magnitude N^2 crossover opportunity estimate: 2.333e+06
-- Rounded planning estimate, not exact count: 2.33 million possible crossovers
-- Caveat: actual accepted crossovers depend on inclination, longitude drift, spacing, orbit precision, rejected near-parallel crossings, and coverage gaps.
+Transfer phase: science continuity and risk
+The transfer is mainly an architecture enabler, not the core mapping phase. It costs about 91.3 m/s and remains above 174.9 km, so it does not drive the altimeter error budget directly. Its effect on the altimeter mission is indirect: it preserves enough propellant and altitude margin to move from targeted SPT passes into the stable mapping orbit without making the low-orbit campaign too expensive or risky. Any altimeter data during transfer should be treated as opportunistic, with less controlled geometry than the two planned science phases.
 
-C. Radial orbit error and crossover self-calibration
-- Assumed single-height measurement noise: 0.30 m
-- Raw radial-error cases:
-  radial 1.0 m -> crossover sigma 1.48 m
-  radial 2.0 m -> crossover sigma 2.86 m
-  radial 3.0 m -> crossover sigma 4.26 m
-- Target radial-error cases after crossover self-calibration:
-  radial 0.5 m -> crossover sigma 0.82 m, SNR for 1 m tide 1.21, SNR for 2 m tide 2.43
-  radial 1.0 m -> crossover sigma 1.48 m, SNR for 1 m tide 0.68, SNR for 2 m tide 1.35
-- Optimistic least-squares sizing using a 2 m raw radial case:
-  unknown arc offsets plus h2: 1528
-  observations per unknown, approx.: 1526
-  random-only arc precision from independent-crossing assumption: 0.073 m
-  assumed practical effective radial-error target with systematics: 0.50 to 1.00 m
-- Interpretation: the redundancy calculation is optimistic because crossovers are correlated. The 0.5-1.0 m range is a target assumption, not a proven result from this simplified model.
+Phase 2: stable repeat-altimetry campaign
+Phase 2 is the workhorse for geodetic and tidal altimetry. The 174.9 km altitude gives a 5.735 h period, producing about 1527 revolutions over the primary science year and roughly 2.33 million potential crossover opportunities. This is what lets the mission reduce radial orbit error through self-calibration and compare surface heights at different tidal phases. The limitation is latitude: a 60 deg stable orbit cannot directly observe the 80-90 deg S polar terrain, so it complements Phase 1 rather than replacing it.
 
-D. Ground velocity and sampling
-- Phase 1 closest-approach altitude used: 101.9 km
-- Phase 1 closest-approach orbital speed: 142.7 m/s
-- Phase 1 closest-approach ground speed: 101.6 m/s
-- Stable orbit orbital speed: 129.9 m/s
-- Stable orbit ground speed: 76.7 m/s
-- Enceladus equatorial surface rotation speed: 13.4 m/s
-- Caveat: ground speeds are approximate surface-projected speeds for sampling estimates; exact ground-track speed depends on body rotation and pass direction and can differ by roughly 10-20%.
-- Along-track sample spacing examples:
-  1 Hz -> Phase 1 101.64 m, stable 76.72 m
-  10 Hz -> Phase 1 10.16 m, stable 7.67 m
-  100 Hz -> Phase 1 1.02 m, stable 0.77 m
-
-Architecture conclusion
-- Phase 1 is now a propagated Saturn-Enceladus CR3BP halo-style orbit near Enceladus, selected for about 100 km closest approach and SPT latitude access.
-- Phase 2 stable low-inclination orbit gives long-duration coverage and an order-of-magnitude million-scale crossover opportunity estimate, but cannot directly cover 80-90 deg S.
-- The Phase 2 stable orbit remains a two-body low-inclination approximation. The baseline calculation uses 60 deg inclination for geodetic/tidal coverage; an ESA-compatible <=48 deg case should be re-run if that constraint is adopted.
-- The mission architecture is therefore justified as Phase 1 for targeted SPT passes and Phase 2 for stable crossover-rich gravity/topography/tide analysis.
-
-Note: the Phase 1 curve is generated from propagated CR3BP states. The dashed transfer is now the minimum-delta-v Lambert transfer found by the Enceladus-centered two-body grid search, not a full CR3BP manifold optimization.
+Altimeter performance interpretation
+With 0.30 m single-shot height noise, the limiting issue is not the altimeter sample precision alone; it is the radial orbit knowledge and how well crossover adjustment can remove it. The current model suggests a practical calibrated radial-error target of 0.50-1.00 m, which is enough to make meter-scale tides plausible but not guaranteed. The conclusion should therefore be cautious: Phase 2 supplies the redundancy needed for calibration and tide recovery, while Phase 1 supplies the polar context. If full SPT access is mandatory, the Phase 1 orbit must be retuned before the altimeter science case is fully closed.
