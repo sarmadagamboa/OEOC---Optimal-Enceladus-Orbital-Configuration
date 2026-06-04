@@ -61,6 +61,10 @@ def build_summary_text(config, outputs):
     validation = outputs["phase1_validation"]
     transfer = outputs["transfer_validation"]
     calibration = outputs["calibration"]
+    sample_10hz = next(
+        row for row in outputs["sample_spacing_rows"]
+        if abs(row["rate_hz"] - 10.0) < 1.0e-9
+    )
 
     min_lat = validation["groundtrack_min_latitude_deg"]
     boundary_lat = abs(config.spt_boundary_latitude_deg)
@@ -136,6 +140,12 @@ def build_summary_text(config, outputs):
     lines.append("Phase 2: stable repeat-altimetry campaign")
     lines.append(
         f"Phase 2 is the workhorse for geodetic and tidal altimetry. The {stable_altitude_km:.1f} km altitude gives a {outputs['stable_period_h']:.3f} h period, producing about {outputs['number_of_orbits']:.0f} revolutions over the primary science year and roughly {outputs['crossover_count']/1.0e6:.2f} million potential crossover opportunities. This is what lets the mission reduce radial orbit error through self-calibration and compare surface heights at different tidal phases. The limitation is latitude: a {config.stable_inclination_deg:.0f} deg stable orbit cannot directly observe the 80-90 deg S polar terrain, so it complements Phase 1 rather than replacing it."
+    )
+    lines.append("")
+
+    lines.append("Sampling speed")
+    lines.append(
+        f"The altimeter footprint moves at about {outputs['phase1_closest_ground_speed_m_s']:.1f} m/s during the Phase 1 closest pass and {outputs['stable_ground_speed_m_s']:.1f} m/s in the stable Phase 2 orbit. At a representative 10 Hz measurement rate, this gives along-track samples every {sample_10hz['phase1_spacing_m']:.1f} m in Phase 1 and {sample_10hz['stable_spacing_m']:.1f} m in Phase 2, so sampling density is not the main limitation; orbit knowledge and crossover geometry are."
     )
     lines.append("")
 
